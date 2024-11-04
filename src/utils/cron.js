@@ -6,7 +6,9 @@ const client = new Client({
   token: process.env.QSTASH_TOKEN,
 });
 
-client.schedules.create({
+// utils/cron.js
+const schedule = await client.schedules.create({
   destination: `${process.env.NEXT_PUBLIC_APP_URL}/api/monitor`,
   cron: "*/3 * * * *",
 });
+console.log("Created schedule:", schedule);
