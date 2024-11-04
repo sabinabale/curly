@@ -8,7 +8,7 @@ const client = new Client({
 
 export async function createSchedule() {
   return client.schedules.create({
-    destination: "https://sabini.io",
+    destination: `${process.env.NEXT_PUBLIC_APP_URL}/api/monitor`,
     cron: "*/3 * * * *",
   });
 }
