@@ -7,6 +7,6 @@ const client = new Client({
 });
 
 client.schedules.create({
-  destination: "https://sabini.io",
+  destination: `${process.env.NEXT_PUBLIC_APP_URL}/api/monitor`,
   cron: "*/3 * * * *",
 });
