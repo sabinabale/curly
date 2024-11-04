@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { monitorUrl } from "@/utils/sendCurl";
+import { monitorUrl } from "@/utils/monitor";
 
 const MONITOR_INTERVAL = 1 * 60 * 1000;
 const TARGET_URL = "https://sabini.io";

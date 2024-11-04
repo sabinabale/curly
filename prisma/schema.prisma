@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Monitor {
+model monitorCheck {
   id           Int      @id @default(autoincrement())
   url          String
   statusCode   Int?
