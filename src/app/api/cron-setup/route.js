@@ -1,4 +1,4 @@
-import { createSchedule } from "@/utils/qstash";
+import { createSchedule } from "@/utils/cron";
 import { prisma } from "@/utils/prisma";
 
 export async function GET() {
