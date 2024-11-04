@@ -29,7 +29,7 @@ async function handler(req) {
     console.error("Detailed error:", {
       message: error.message,
       stack: error.stack,
-      prismaError: error.code, // Prisma specific error code if available
+      prismaError: error.code,
     });
 
     return Response.json(

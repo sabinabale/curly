@@ -1,3 +1,5 @@
+// api/cron-setup/route.js
+
 import { createSchedule } from "@/utils/cron";
 import { prisma } from "@/utils/prisma";
 
