@@ -3,22 +3,48 @@
 @tailwind utilities;
 
 @keyframes pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(22, 101, 52, 0);
+  0% {
+    box-shadow: 0 0 0 0 rgba(39, 182, 94, 0.8);
   }
-  50% {
-    box-shadow: 0 0 0 4px rgba(22, 101, 52, 0.5),
-      0 0 8px 4px rgba(22, 101, 52, 0.25);
+  40% {
+    box-shadow: 0 0 0 8px rgba(39, 182, 94, 0.3),
+      0 0 16px 8px rgba(22, 101, 52, 0.15);
+  }
+  45% {
+    box-shadow: 0 0 2px 8px rgba(38, 178, 92, 0.25),
+      0 0 20px 12px rgba(22, 101, 52, 0.125);
+  }
+  60% {
+    box-shadow: 0 0 4px 8px rgba(32, 149, 77, 0.2),
+      0 0 24px 16px rgba(22, 101, 52, 0.1);
+  }
+  70% {
+    box-shadow: 0 0 6px 8px rgba(32, 149, 77, 0.15),
+      0 0 28px 20px rgba(22, 101, 52, 0.075);
+  }
+  80% {
+    box-shadow: 0 0 8px 8px rgba(32, 149, 77, 0.1),
+      0 0 32px 24px rgba(22, 101, 52, 0.05);
+  }
+  85% {
+    box-shadow: 0 0 4px 4px rgba(32, 149, 77, 0.05),
+      0 0 16px 12px rgba(22, 101, 52, 0.025);
+  }
+  90% {
+    box-shadow: 0 0 0 0 rgba(32, 149, 77, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(32, 149, 77, 0);
   }
 }
 
 .pulsing-shadow {
-  animation: pulse 3s infinite;
+  animation: pulse 5s linear infinite;
 }
 
 body {
-  color: #2f4c39;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #111113;
 }
 
 h1 {

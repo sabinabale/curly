@@ -40,7 +40,7 @@ export default function Monitor() {
   }, []);
 
   return (
-    <article className="border-[#2F4C39]/60 border bg-[#2F4C39]/10 rounded-3xl w-[540px]">
+    <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[540px]">
       <div className="border-b border-[#2F4C39]/60 px-6 py-4 flex justify-between items-center">
         <MonitorHeader />
         <MonitorStatusIcon
@@ -71,7 +71,7 @@ function MonitorStatusIcon({ status, error }) {
 
   return (
     <div
-      className="mr-4 border-2  rounded-full pulsing-shadow"
+      className="mr-4 border-2 rounded-full pulsing-shadow"
       title={error || (isUp ? "Online" : "Offline")}
     >
       <svg
