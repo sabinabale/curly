@@ -1,8 +1,66 @@
+// "use client";
+// import React, { useState, useEffect } from "react";
+// import { monitorUrl } from "@/utils/monitor";
+
+// const MONITOR_INTERVAL = 1 * 60 * 1000;
+// const TARGET_URL = "https://sabini.io";
+
+// export default function Monitor() {
+//   const [monitorData, setMonitorData] = useState({
+//     status: null,
+//     responseTime: null,
+//     uptime: 0,
+//     lastCheck: null,
+//     error: null,
+//   });
+
+//   useEffect(() => {
+//     const startTime = Date.now();
+
+//     // Initial check
+//     const checkStatus = async () => {
+//       const result = await monitorUrl(TARGET_URL);
+//       setMonitorData((prev) => ({
+//         status: result.statusCode,
+//         responseTime: result.responseTime,
+//         uptime: Math.floor((Date.now() - startTime) / 1000),
+//         lastCheck: result.timestamp,
+//         error: result.error,
+//       }));
+//     };
+
+//     // Run initial check
+//     checkStatus();
+
+//     // Set up interval for subsequent checks
+//     const intervalId = setInterval(checkStatus, MONITOR_INTERVAL);
+
+//     // Cleanup
+//     return () => clearInterval(intervalId);
+//   }, []);
+
+//   return (
+//     <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[540px]">
+//       <div className="border-b border-[#2F4C39]/60 px-6 py-4 flex justify-between items-center">
+//         <MonitorHeader />
+//         <MonitorStatusIcon
+//           status={monitorData.status}
+//           error={monitorData.error}
+//         />
+//       </div>
+//       <div className="flex px-6 py-4 justify-between">
+//         <MonitorCurrentStatus status={monitorData.status} />
+//         <MonitorCheckFrequency />
+//         <MonitorResponseTime responseTime={monitorData.responseTime} />
+//       </div>
+//     </article>
+//   );
+// }
+
 "use client";
 import React, { useState, useEffect } from "react";
-import { monitorUrl } from "@/utils/monitor";
 
-const MONITOR_INTERVAL = 1 * 60 * 1000;
+const UI_REFRESH_INTERVAL = 10 * 1000; // Refresh UI every 10 seconds
 const TARGET_URL = "https://sabini.io";
 
 export default function Monitor() {
@@ -15,25 +73,38 @@ export default function Monitor() {
   });
 
   useEffect(() => {
-    const startTime = Date.now();
+    // Only fetch the latest check from database
+    const fetchLatestCheck = async () => {
+      try {
+        const response = await fetch("/api/monitor/latest-check", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: TARGET_URL }),
+        });
 
-    // Initial check
-    const checkStatus = async () => {
-      const result = await monitorUrl(TARGET_URL);
-      setMonitorData((prev) => ({
-        status: result.statusCode,
-        responseTime: result.responseTime,
-        uptime: Math.floor((Date.now() - startTime) / 1000),
-        lastCheck: result.timestamp,
-        error: result.error,
-      }));
+        const data = await response.json();
+
+        if (data.success && data.check) {
+          setMonitorData({
+            status: data.check.statusCode,
+            responseTime: data.check.responseTime,
+            uptime: 0,
+            lastCheck: data.check.timestamp,
+            error: data.check.error,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch monitor data:", error);
+      }
     };
 
-    // Run initial check
-    checkStatus();
+    // Initial fetch
+    fetchLatestCheck();
 
-    // Set up interval for subsequent checks
-    const intervalId = setInterval(checkStatus, MONITOR_INTERVAL);
+    // Refresh UI more frequently than the Qstash cron
+    const intervalId = setInterval(fetchLatestCheck, UI_REFRESH_INTERVAL);
 
     // Cleanup
     return () => clearInterval(intervalId);
