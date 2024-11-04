@@ -1,38 +1,31 @@
-import { verifySignature } from "@upstash/qstash/dist/nextjs";
-import { NextResponse } from "next/server";
-import { prisma } from "@/utils/prisma";
+// app/api/monitor/route.js
+
+import { verifySignature } from "@upstash/qstash/nextjs";
 import { monitorUrl } from "@/utils/monitor";
+import { prisma } from "@/utils/prisma";
 
-async function handler(request) {
+async function handler(req) {
   try {
-    // Get URL from request body that Qstash sends
-    const { url } = await request.json();
+    const TARGET_URL = "https://sabini.io";
+    const result = await monitorUrl(TARGET_URL);
 
-    // Monitor the URL
-    const result = await monitorUrl(url);
-
-    // Save the result to database using Prisma
     const savedCheck = await prisma.monitorCheck.create({
       data: {
-        url,
+        url: TARGET_URL,
         statusCode: result.statusCode,
         responseTime: result.responseTime,
         error: result.error,
       },
     });
 
-    return NextResponse.json({ success: true, data: savedCheck });
+    return Response.json({ success: true, data: savedCheck });
   } catch (error) {
-    console.error("Monitoring failed:", error);
-    return NextResponse.json(
-      { success: false, error: "Monitoring failed" },
+    console.error("Monitor check failed:", error);
+    return Response.json(
+      { success: false, error: error.message },
       { status: 500 }
     );
   }
 }
 
-// Wrap the handler with Qstash verification
 export const POST = verifySignature(handler);
-
-// Required for Qstash
-export const runtime = "nodejs";
