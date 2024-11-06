@@ -1,81 +1,34 @@
 // components/monitors/Monitor.js
 
 "use client";
-import React, { useState, useEffect } from "react";
-import { monitorUrl } from "@/utils/monitor";
 
-const MONITOR_INTERVAL = 1 * 60 * 1000;
-const TARGET_URL = "https://sabini.io";
-
-export default function Monitor() {
-  const [monitorData, setMonitorData] = useState({
-    status: null,
-    responseTime: null,
-    uptime: 0,
-    lastCheck: null,
-    error: null,
-  });
-
-  useEffect(() => {
-    const startTime = Date.now();
-
-    // Initial check
-    const checkStatus = async () => {
-      const result = await monitorUrl(TARGET_URL);
-      setMonitorData((prev) => ({
-        status: result.statusCode,
-        responseTime: result.responseTime,
-        uptime: Math.floor((Date.now() - startTime) / 1000),
-        lastCheck: result.timestamp,
-        error: result.error,
-      }));
-    };
-
-    // Run initial check
-    checkStatus();
-
-    // Set up interval for subsequent checks
-    const intervalId = setInterval(checkStatus, MONITOR_INTERVAL);
-
-    // Cleanup
-    return () => clearInterval(intervalId);
-  }, []);
-
+export default function Monitor({ monitor }) {
   return (
     <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[540px]">
       <div className="border-b border-[#2F4C39]/60 px-6 py-4 flex justify-between items-center">
-        <MonitorHeader />
-        <MonitorStatusIcon
-          status={monitorData.status}
-          error={monitorData.error}
-        />
+        <MonitorHeader monitor={monitor} />
+        <MonitorStatusIcon />
       </div>
       <div className="flex px-6 py-4 justify-between">
-        <MonitorCurrentStatus status={monitorData.status} />
+        <MonitorCurrentStatus />
         <MonitorCheckFrequency />
-        <MonitorResponseTime responseTime={monitorData.responseTime} />
+        <MonitorResponseTime />
       </div>
     </article>
   );
 }
 
-function MonitorHeader() {
+function MonitorHeader({ monitor }) {
   return (
     <div>
-      <h1>Sabini.io</h1>
-      <p className="text-sm">{TARGET_URL}</p>
+      <h1>{monitor.name}</h1>
     </div>
   );
 }
 
-function MonitorStatusIcon({ status, error }) {
-  const isUp = !error && status && status < 400;
-
+function MonitorStatusIcon() {
   return (
-    <div
-      className="mr-4 border-2 rounded-full pulsing-shadow"
-      title={error || (isUp ? "Online" : "Offline")}
-    >
+    <div className="mr-4 border-2 rounded-full pulsing-shadow">
       <svg
         width="14"
         height="14"
@@ -83,21 +36,17 @@ function MonitorStatusIcon({ status, error }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle cx="7" cy="7" r="7" fill={isUp ? "#3F8658" : "#DC2626"} />
+        <circle cx="7" cy="7" r="7" fill="#3F8658" />
       </svg>
     </div>
   );
 }
 
-function MonitorCurrentStatus({ status }) {
-  const isUp = status && status < 400;
-
+function MonitorCurrentStatus() {
   return (
     <div>
-      <h2>Status</h2>
-      <p className="text-sm">
-        {status ? (isUp ? "up" : "down") : "checking..."}
-      </p>
+      <h4>Status</h4>
+      <p className="text-sm">up</p>
     </div>
   );
 }
@@ -105,32 +54,17 @@ function MonitorCurrentStatus({ status }) {
 function MonitorCheckFrequency() {
   return (
     <div>
-      <h2>Check Frequency</h2>
-      <p className="text-sm">every 60s</p>
+      <h4>Check Frequency</h4>
+      <p className="text-sm">every 3m</p>
     </div>
   );
 }
 
-function MonitorResponseTime({ responseTime }) {
-  const [lastResponseTime, setLastResponseTime] = useState(null);
-
-  useEffect(() => {
-    if (responseTime) {
-      setLastResponseTime(responseTime);
-    }
-  }, [responseTime]);
-
-  const formatResponseTime = (ms) => {
-    if (!ms) return "checking...";
-    return `${(ms / 1000).toFixed(1)}s`;
-  };
-
+function MonitorResponseTime() {
   return (
     <div>
-      <h2>Response Time</h2>
-      <p className="text-sm">
-        {formatResponseTime(responseTime || lastResponseTime)}
-      </p>
+      <h4>Response Time</h4>
+      <p className="text-sm">0.2s</p>
     </div>
   );
 }
