@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/app/*": ["./src/app/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/monitors/*": ["./src/components/monitors/*"],
+      "@/layout/*": ["./src/components/layout/*"],
+      "@/icons/*": ["./src/components/icons/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/assets/*": ["./src/assets/*"],
+      "@/api/*": ["./src/app/api/*"]
     }
   }
 }
