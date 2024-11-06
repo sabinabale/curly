@@ -1,6 +1,4 @@
-// export const POST = verifySignature(handler);
-
-import { verifySignature } from "@upstash/qstash/nextjs";
+// import { verifySignature } from "@upstash/qstash/nextjs";
 import { monitorUrl } from "@/utils/monitor";
 import { prisma } from "@/utils/prisma";
 
@@ -64,4 +62,6 @@ async function handler(req) {
   }
 }
 
-export const POST = verifySignature(handler);
+// export const POST = verifySignature(handler);
+
+export const POST = handler;
