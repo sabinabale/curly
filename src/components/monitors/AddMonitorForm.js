@@ -3,6 +3,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/utils/supabase";
 
 export default function AddMonitorForm() {
   const router = useRouter();
@@ -57,28 +58,23 @@ export default function AddMonitorForm() {
     setError("");
 
     try {
-      const response = await fetch("/api/create-monitor", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          frequency: parseInt(formData.frequency * 60),
-          timeout: parseInt(formData.timeout),
-          expectedStatusCode: parseInt(formData.expectedStatusCode),
-          maxResponseTime: parseInt(formData.maxResponseTime),
-        }),
-      });
+      const { data, error: supabaseError } = await supabase
+        .from("Monitor")
+        .insert([
+          {
+            ...formData,
+            frequency: parseInt(formData.frequency) * 60,
+            timeout: parseInt(formData.timeout),
+            expectedStatusCode: parseInt(formData.expectedStatusCode),
+            maxResponseTime: parseInt(formData.maxResponseTime),
+            createdAt: new Date().toISOString(),
+          },
+        ])
+        .select();
 
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || "Failed to create monitor");
-      }
+      if (supabaseError) throw supabaseError;
 
       router.push("/");
-      router.refresh();
     } catch (err) {
       setError(err.message);
     } finally {

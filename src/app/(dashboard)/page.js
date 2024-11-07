@@ -3,34 +3,33 @@
 import { useEffect, useState } from "react";
 import AddMonitorButton from "@/components/monitors/AddMonitorButton";
 import Monitor from "@/components/monitors/Monitor";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/utils/supabase";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+import { usePathname } from "next/navigation";
 
 export default function Home() {
   const [monitors, setMonitors] = useState([]);
   const [error, setError] = useState(null);
+  const pathname = usePathname();
 
   const fetchMonitors = async () => {
-    const { data, error } = await supabase
-      .from("Monitor")
-      .select("*")
-      .order("createdAt", { ascending: false });
+    try {
+      const { data, error: fetchError } = await supabase
+        .from("Monitor")
+        .select("*")
+        .order("createdAt", { ascending: false });
 
-    if (error) {
+      if (fetchError) throw fetchError;
+      setMonitors(data || []);
+    } catch (error) {
       console.error("Error fetching monitors:", error);
       setError(error.message);
-    } else {
-      setMonitors(data || []);
     }
   };
 
   useEffect(() => {
     fetchMonitors();
-  }, []);
+  }, [pathname]);
 
   return (
     <main>
