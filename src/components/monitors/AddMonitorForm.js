@@ -77,7 +77,7 @@ export default function AddMonitorForm() {
         throw new Error(data.error || "Failed to create monitor");
       }
 
-      router.push("/");
+      router.push("/?refresh=" + Date.now());
     } catch (err) {
       setError(err.message);
     } finally {
