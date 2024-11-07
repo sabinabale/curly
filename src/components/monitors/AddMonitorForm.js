@@ -78,6 +78,7 @@ export default function AddMonitorForm() {
       }
 
       router.push("/");
+      router.refresh();
     } catch (err) {
       setError(err.message);
     } finally {
