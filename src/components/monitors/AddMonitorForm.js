@@ -1,4 +1,4 @@
-// add monitor form
+// add monitor
 
 "use client";
 import React, { useState } from "react";
@@ -77,7 +77,7 @@ export default function AddMonitorForm() {
         throw new Error(data.error || "Failed to create monitor");
       }
 
-      router.push("/?refresh=" + Date.now());
+      router.push("/");
     } catch (err) {
       setError(err.message);
     } finally {
