@@ -10,11 +10,7 @@ export default function AddMonitorForm() {
   const [formData, setFormData] = useState({
     name: "",
     url: "",
-    frequency: "5",
-    description: "",
-    timeout: "5000",
-    expectedStatusCode: "200",
-    maxResponseTime: "2000",
+    frequency: "3",
   });
 
   const handleInputChange = (e) => {
@@ -63,9 +59,6 @@ export default function AddMonitorForm() {
         body: JSON.stringify({
           ...formData,
           frequency: parseInt(formData.frequency * 60),
-          timeout: parseInt(formData.timeout),
-          expectedStatusCode: parseInt(formData.expectedStatusCode),
-          maxResponseTime: parseInt(formData.maxResponseTime),
         }),
       });
 
@@ -124,58 +117,6 @@ export default function AddMonitorForm() {
             min="1"
             value={formData.frequency}
             onChange={handleInputChange}
-            disabled={loading}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="timeout">Timeout (milliseconds):</label>
-          <input
-            id="timeout"
-            name="timeout"
-            type="number"
-            min="1000"
-            value={formData.timeout}
-            onChange={handleInputChange}
-            disabled={loading}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="expectedStatusCode">Expected Status Code:</label>
-          <input
-            id="expectedStatusCode"
-            name="expectedStatusCode"
-            type="number"
-            min="100"
-            max="599"
-            value={formData.expectedStatusCode}
-            onChange={handleInputChange}
-            disabled={loading}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="maxResponseTime">Max Response Time (ms):</label>
-          <input
-            id="maxResponseTime"
-            name="maxResponseTime"
-            type="number"
-            min="100"
-            value={formData.maxResponseTime}
-            onChange={handleInputChange}
-            disabled={loading}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="description">Description (Optional):</label>
-          <input
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            placeholder="Description of what this monitor checks"
             disabled={loading}
           />
         </div>

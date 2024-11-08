@@ -4,15 +4,7 @@ import { createSchedule } from "@/utils/cron";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const {
-      name,
-      url,
-      frequency,
-      description,
-      timeout,
-      expectedStatusCode,
-      maxResponseTime,
-    } = body;
+    const { name, url, frequency, description } = body;
 
     // Create the monitor
     const monitor = await prisma.Monitor.create({
@@ -21,9 +13,7 @@ export async function POST(request) {
         url,
         frequency,
         description,
-        timeout,
-        expectedStatusCode,
-        maxResponseTime,
+
         isActive: true,
       },
     });

@@ -8,19 +8,15 @@ datasource db {
 }
 
 model Monitor {
-  id                 Int            @id @default(autoincrement())
-  name               String
-  url                String
-  isActive           Boolean        @default(true)
-  frequency          Int
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
-  description        String?
-  timeout            Int            @default(30000)
-  retryCount         Int            @default(0)
-  expectedStatusCode Int            @default(200)
-  maxResponseTime    Int?
-  checks             monitorCheck[]
+  id         Int            @id @default(autoincrement())
+  name       String
+  url        String
+  isActive   Boolean        @default(true)
+  frequency  Int
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  retryCount Int            @default(0)
+  checks     monitorCheck[]
 
   @@unique([url])
 }

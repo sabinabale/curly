@@ -19,10 +19,7 @@ async function handler(req) {
     }
 
     // Perform the check with monitor-specific settings
-    const result = await monitorUrl(url, {
-      timeout: monitor.timeout,
-      expectedStatusCode: monitor.expectedStatusCode,
-    });
+    const result = await monitorUrl(url);
 
     // Save the check result
     const savedCheck = await prisma.monitorCheck.create({
@@ -34,24 +31,6 @@ async function handler(req) {
         monitorId: monitor.id, // Associate with the monitor
       },
     });
-
-    // Update monitor's retryCount if there was an error
-    if (result.error || result.statusCode !== monitor.expectedStatusCode) {
-      await prisma.Monitor.update({
-        where: { id: monitor.id },
-        data: {
-          retryCount: monitor.retryCount + 1,
-        },
-      });
-    } else {
-      // Reset retry count if check was successful
-      await prisma.Monitor.update({
-        where: { id: monitor.id },
-        data: {
-          retryCount: 0,
-        },
-      });
-    }
 
     return Response.json({ success: true, data: savedCheck });
   } catch (error) {
