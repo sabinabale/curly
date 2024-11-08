@@ -9,32 +9,28 @@ import { usePathname } from "next/navigation";
 
 export default function Home() {
   const [monitors, setMonitors] = useState([]);
-  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const pathname = usePathname();
 
-  const fetchMonitors = async () => {
-    try {
-      const { data, error: fetchError } = await supabase
+  useEffect(() => {
+    const fetchMonitors = async () => {
+      const { data } = await supabase
         .from("Monitor")
         .select("*")
         .order("createdAt", { ascending: false });
 
-      if (fetchError) throw fetchError;
       setMonitors(data || []);
-    } catch (error) {
-      console.error("Error fetching monitors:", error);
-      setError(error.message);
-    }
-  };
+      setIsLoading(false);
+    };
 
-  useEffect(() => {
     fetchMonitors();
   }, [pathname]);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <main>
       <AddMonitorButton />
-      {error && <div className="text-red-500 p-4">{error}</div>}
       <ul className="space-y-4">
         {monitors.map((monitor) => (
           <li key={monitor.id}>
