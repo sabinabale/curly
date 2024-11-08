@@ -1,23 +1,3 @@
-// import { Client } from "@upstash/qstash";
-
-// const client = new Client({
-//   token: process.env.QSTASH_TOKEN,
-// });
-
-// export async function createSchedule(frequency, monitorUrl) {
-//   if (!frequency || !monitorUrl) {
-//     throw new Error("Frequency and monitor URL are required");
-//   }
-
-//   return client.schedules.create({
-//     destination: `${process.env.NEXT_PUBLIC_APP_URL}/api/monitor`,
-//     cron: `*/${frequency} * * * *`,
-//     body: JSON.stringify({ url: monitorUrl }),
-//   });
-// }
-
-// utils/cron.js
-
 // utils/cron.js
 
 import { Client } from "@upstash/qstash";

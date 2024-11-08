@@ -4,7 +4,7 @@
 
 export default function Monitor({ monitor }) {
   return (
-    <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[540px]">
+    <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[500px]">
       <div className="border-b border-[#2F4C39]/60 px-6 py-4 flex justify-between items-center">
         <MonitorHeader monitor={monitor} />
         <MonitorStatusIcon />
