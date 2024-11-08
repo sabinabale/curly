@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Input, Select } from "@/components/ui/Input";
+import { InputLabel } from "@/components/ui/InputLabel";
+import { Button } from "@/components/ui/Button";
 
 export default function AddMonitorForm() {
   const router = useRouter();
@@ -77,61 +80,48 @@ export default function AddMonitorForm() {
   };
 
   return (
-    <div>
-      <h1>Add New Monitor</h1>
-      <p>Create a new uptime monitor to track your service availability</p>
+    <div className="w-[500px]">
+      <h1>Create monitor</h1>
 
       <form onSubmit={handleSubmit}>
         {error && <div style={{ color: "red" }}>{error}</div>}
 
         <div>
-          <label htmlFor="name">Monitor Name:</label>
-          <input
+          <InputLabel htmlFor="name">Monitor name:</InputLabel>
+          <Input
             id="name"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            placeholder="My Service Monitor"
+            placeholder="My blog"
             disabled={loading}
           />
         </div>
 
         <div>
-          <label htmlFor="url">URL to Monitor:</label>
-          <input
+          <InputLabel htmlFor="url">Endpoint to monitor:</InputLabel>
+          <Input
             id="url"
             name="url"
             value={formData.url}
             onChange={handleInputChange}
-            placeholder="https://example.com/health"
+            placeholder="https://example.com/"
             disabled={loading}
           />
         </div>
 
         <div>
-          <label htmlFor="frequency">Check Frequency (minutes):</label>
-          <input
-            id="frequency"
-            name="frequency"
-            type="number"
-            min="1"
-            value={formData.frequency}
-            onChange={handleInputChange}
-            disabled={loading}
-          />
+          <InputLabel htmlFor="numberSelect">Check monitor every:</InputLabel>
+          <Select id="numberSelect" name="number">
+            <option value="3">3 minutes</option>
+            <option value="5">5 minutes</option>
+          </Select>
         </div>
 
         <div className="mt-8 flex gap-4">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            disabled={loading}
-          >
-            Cancel
-          </button>
-          <button type="submit" disabled={loading}>
-            {loading ? "Creating..." : "Create Monitor"}
-          </button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Creating..." : "Create monitor"}
+          </Button>
         </div>
       </form>
     </div>

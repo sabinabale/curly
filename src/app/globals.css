@@ -38,6 +38,10 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .pulsing-shadow {
   animation: pulse 5s linear infinite;
 }
@@ -91,6 +95,7 @@ button:hover {
 
 input {
   all: unset;
+  box-sizing: border-box;
   display: block;
   padding-block: 0.5rem;
   padding-inline: 1rem;
@@ -102,4 +107,13 @@ input {
 label {
   padding-top: 16px;
   display: block;
+}
+
+select {
+  appearance: none; /* Removes the default arrow */
+  -webkit-appearance: none; /* For Safari */
+  -moz-appearance: none; /* For Firefox */
+  background-image: url("../assets/icons/chevron-down.svg");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
 }
