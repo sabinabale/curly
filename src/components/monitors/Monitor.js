@@ -53,7 +53,7 @@ export default function Monitor({ monitor }) {
 
   const getStatusColor = (code) => {
     if (!code) return "#gray";
-    if (code < 400) return "#3F8658";
+    if (code >= 200 && code < 400) return "#3F8658";
     if (code >= 400) return "#D53030";
     return "#gray";
   };
@@ -62,7 +62,10 @@ export default function Monitor({ monitor }) {
     <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[500px]">
       <div className="border-b border-[#2F4C39]/60 px-6 py-4 flex justify-between items-center">
         <MonitorHeader monitor={monitor} />
-        <MonitorStatusIcon color={getStatusColor(statusCode)} />
+        <MonitorStatusIcon
+          color={getStatusColor(statusCode)}
+          statusCode={statusCode}
+        />
       </div>
       <div className="flex px-6 py-4 justify-between">
         <MonitorCurrentStatus
@@ -89,7 +92,9 @@ function MonitorHeader({ monitor }) {
 
 function MonitorStatusIcon({ color, statusCode }) {
   const containerClasses = `mr-4 border-2 rounded-full ${
-    !statusCode || statusCode <= 400 ? "pulsing-shadow" : ""
+    !statusCode || statusCode >= 400
+      ? "animate-pulse border-red-700"
+      : "pulsing-shadow"
   }`;
 
   return (
