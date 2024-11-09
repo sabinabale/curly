@@ -54,18 +54,26 @@ export default function AddMonitorForm() {
     setError("");
 
     try {
-      const response = await fetch("/api/create-monitor", {
+      const frequencyInSeconds = parseInt(formData.frequency) * 60;
+
+      console.log("Submitting with frequency:", frequencyInSeconds); // Debug log
+
+      const response = await fetch("/api/monitors/create-monitor", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
-          frequency: parseInt(formData.frequency * 60),
+          name: formData.name,
+          url: formData.url,
+          frequency: frequencyInSeconds,
         }),
       });
 
-      const data = await response.json();
+      const rawResponse = await response.text();
+      console.log("Raw response:", rawResponse); // Debug log
+
+      const data = rawResponse ? JSON.parse(rawResponse) : {};
 
       if (!data.success) {
         throw new Error(data.error || "Failed to create monitor");
@@ -73,6 +81,7 @@ export default function AddMonitorForm() {
 
       router.push("/");
     } catch (err) {
+      console.error("Error:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -111,8 +120,14 @@ export default function AddMonitorForm() {
         </div>
 
         <div>
-          <InputLabel htmlFor="numberSelect">Check monitor every:</InputLabel>
-          <Select id="numberSelect" name="number">
+          <InputLabel htmlFor="frequency">Check monitor every:</InputLabel>
+          <Select
+            id="frequency"
+            name="frequency"
+            value={formData.frequency}
+            onChange={handleInputChange}
+            disabled={loading}
+          >
             <option value="3">3 minutes</option>
             <option value="5">5 minutes</option>
           </Select>
