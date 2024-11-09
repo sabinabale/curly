@@ -8,17 +8,16 @@ datasource db {
 }
 
 model Monitor {
-  id         Int            @id @default(autoincrement())
-  name       String
-  url        String
-  isActive   Boolean        @default(true)
-  frequency  Int
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-  retryCount Int            @default(0)
-  checks     monitorCheck[]
-
-  @@unique([url])
+  id           Int            @id @default(autoincrement())
+  name         String
+  url          String         @unique
+  isActive     Boolean        @default(true)
+  frequency    Int
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  retryCount   Int            @default(0)
+  monitor_type MonitorTypes?
+  checks       monitorCheck[]
 }
 
 model monitorCheck {
@@ -28,9 +27,17 @@ model monitorCheck {
   responseTime Int?
   error        String?
   timestamp    DateTime @default(now())
-  Monitor      Monitor? @relation(fields: [monitorId], references: [id])
   monitorId    Int?
+  Monitor      Monitor? @relation(fields: [monitorId], references: [id])
 
   @@index([url, timestamp])
   @@index([monitorId])
+}
+
+enum MonitorTypes {
+  basic
+  keyword_found
+  keyword_not_found
+  ping
+  status_code
 }

@@ -1,8 +1,43 @@
 // components/monitors/Monitor.js
 
 "use client";
+import { useEffect, useState } from "react";
 
 export default function Monitor({ monitor }) {
+  const [averageResponse, setAverageResponse] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/monitors/check-records");
+        const data = await response.json();
+
+        if (data.success && data.records) {
+          const monitorRecords = data.records.filter(
+            (record) => record.monitorId === monitor.id
+          );
+          if (monitorRecords.length > 0) {
+            const average =
+              monitorRecords.reduce(
+                (acc, record) => acc + record.responseTime,
+                0
+              ) / monitorRecords.length;
+            setAverageResponse(Math.round(average));
+          } else {
+            setAverageResponse(0);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching response times:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [monitor.id]);
+
   return (
     <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[500px]">
       <div className="border-b border-[#2F4C39]/60 px-6 py-4 flex justify-between items-center">
@@ -11,8 +46,11 @@ export default function Monitor({ monitor }) {
       </div>
       <div className="flex px-6 py-4 justify-between">
         <MonitorCurrentStatus />
-        <MonitorCheckFrequency />
-        <MonitorResponseTime />
+        <MonitorCheckFrequency checkFrequency={monitor.frequency} />
+        <MonitorResponseTime
+          averageResponse={averageResponse}
+          isLoading={isLoading}
+        />
       </div>
     </article>
   );
@@ -51,20 +89,22 @@ function MonitorCurrentStatus() {
   );
 }
 
-function MonitorCheckFrequency() {
+function MonitorCheckFrequency({ checkFrequency }) {
   return (
     <div>
       <h4>Check Frequency</h4>
-      <p className="text-sm">every 3m</p>
+      <p className="text-sm">every {checkFrequency / 60}m</p>
     </div>
   );
 }
 
-function MonitorResponseTime() {
+function MonitorResponseTime({ averageResponse, isLoading }) {
   return (
     <div>
       <h4>Response Time</h4>
-      <p className="text-sm">0.2s</p>
+      <p className="text-sm">
+        {isLoading ? "Loading..." : `${averageResponse}ms`}
+      </p>
     </div>
   );
 }
