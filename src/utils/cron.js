@@ -15,7 +15,7 @@ export async function createSchedule(frequency, monitorUrl, monitorId) {
   const frequencyInMinutes = frequency / 60;
 
   return client.schedules.create({
-    destination: `${process.env.NEXT_PUBLIC_APP_URL}/api/monitor`,
+    destination: `${process.env.NEXT_PUBLIC_APP_URL}/api/monitors/check-monitor`,
     cron: `*/${frequencyInMinutes} * * * *`,
     body: JSON.stringify({
       monitorId,
