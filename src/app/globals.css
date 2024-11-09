@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes pulse {
+@keyframes monitorpulse {
   0% {
     box-shadow: 0 0 0 0 rgba(39, 182, 94, 0.8);
   }
@@ -43,7 +43,7 @@
 }
 
 .pulsing-shadow {
-  animation: pulse 5s linear infinite;
+  animation: monitorpulse 5s linear infinite;
 }
 
 body {
@@ -66,42 +66,31 @@ h4 {
   color: #86efac;
 }
 
-button,
-.button {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  padding-inline: 1rem;
-  padding-block: 0.5rem;
-  border-radius: 16px;
-  border-width: 1px;
-  font-weight: 600;
-  transition: all 150ms ease-in-out;
-}
-
 .icon {
   padding-right: 1.25rem;
 }
 
-.primary {
+.button-primary {
   background-color: #86efac;
   border-color: #4ade80;
   color: #052e16;
 }
 
-button:hover {
+.button-primary:hover {
   opacity: 0.8;
+}
+
+a {
+  border-radius: 999px;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+  transition: all 150ms ease-in-out;
 }
 
 input {
   all: unset;
+  border: 1px solid;
   box-sizing: border-box;
-  display: block;
-  padding-block: 0.5rem;
-  padding-inline: 1rem;
-  border: 1px white solid;
-  border-radius: 10px;
-  margin-top: 4px;
 }
 
 label {

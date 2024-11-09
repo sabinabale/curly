@@ -2,7 +2,7 @@ import React from "react";
 import { cva } from "class-variance-authority";
 
 const sharedVariants = cva(
-  "w-full border rounded-lg mt-1 px-3 h-[36px] transition-all duration-300 ease-out bg-transparent text-sm",
+  "w-full block border rounded-lg mt-1 px-3 h-[36px] transition-all duration-300 ease-out bg-transparent text-sm",
   {
     variants: {
       variant: {

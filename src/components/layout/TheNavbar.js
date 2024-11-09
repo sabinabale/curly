@@ -29,7 +29,7 @@ export default function TheNavbar() {
               href={link.href}
               className={`border border-transparent rounded-2xl px-4 py-2 font-semibold ${
                 pathname === link.href
-                  ? "bg-[#2F4C39]/90 text-white/90 transition-all duration-500 ease-in-out"
+                  ? "bg-[#2F4C39]/90 text-white/90"
                   : "text-white/40 hover:text-white/90 hover:border-[#2F4C39]/60 transition-all duration-300 ease-in-out"
               }`}
             >

@@ -6,7 +6,7 @@ export default function CreateMonitorButton() {
   return (
     <Link
       href="/monitor/create-monitor"
-      className="button primary icon mb-4 ml-auto"
+      className="button-primary icon mb-4 ml-auto"
     >
       <PlusIcon />
       Create monitor
