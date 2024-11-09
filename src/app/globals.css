@@ -9,18 +9,22 @@
   40% {
     box-shadow: 0 0 0 8px rgba(39, 182, 94, 0.3),
       0 0 16px 8px rgba(22, 101, 52, 0.15);
+    scale: 1.1;
   }
   45% {
     box-shadow: 0 0 2px 8px rgba(38, 178, 92, 0.25),
       0 0 20px 12px rgba(22, 101, 52, 0.125);
+    scale: 1.05;
   }
   60% {
     box-shadow: 0 0 4px 8px rgba(32, 149, 77, 0.2),
       0 0 24px 16px rgba(22, 101, 52, 0.1);
+    scale: 1.025;
   }
   70% {
     box-shadow: 0 0 6px 8px rgba(32, 149, 77, 0.15),
       0 0 28px 20px rgba(22, 101, 52, 0.075);
+    scale: 1;
   }
   80% {
     box-shadow: 0 0 8px 8px rgba(32, 149, 77, 0.1),
@@ -38,12 +42,12 @@
   }
 }
 
-* {
-  box-sizing: border-box;
-}
-
 .pulsing-shadow {
   animation: monitorpulse 5s linear infinite;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
