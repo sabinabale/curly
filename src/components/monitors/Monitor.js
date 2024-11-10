@@ -60,14 +60,14 @@ export default function Monitor({ monitor }) {
 
   return (
     <article className="border-[#2F4C39]/60 border flex bg-[#16201D]/80 rounded-3xl w-[1000px]">
-      <div className="px-6 py-4 flex items-center w-96">
+      <div className="px-7 py-4 flex items-center w-96">
         <MonitorStatusIcon
           color={getStatusColor(statusCode)}
           statusCode={statusCode}
         />
         <MonitorHeader monitor={monitor} />
       </div>
-      <div className="flex px-6 py-4 justify-between flex-1">
+      <div className="flex pl-8 pr-9 py-4 justify-between flex-1">
         <MonitorCurrentStatus
           status={getStatusText(statusCode)}
           statusCode={statusCode}
@@ -87,7 +87,7 @@ function MonitorHeader({ monitor }) {
 }
 
 function MonitorStatusIcon({ color, statusCode }) {
-  const containerClasses = `mr-4 border-2 rounded-full ${
+  const containerClasses = `mr-5 border-2 rounded-full ${
     !statusCode || statusCode >= 400
       ? "animate-pulse border-red-700 bg-red-600"
       : "pulsing-shadow"
