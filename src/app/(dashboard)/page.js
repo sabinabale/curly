@@ -83,7 +83,7 @@ export default function Home() {
   return (
     <TheContainer>
       <main className="flex flex-col">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex justify-between mb-4">
           <h1>Monitors</h1>
           <CreateMonitorButton />
         </div>
