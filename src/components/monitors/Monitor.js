@@ -59,15 +59,15 @@ export default function Monitor({ monitor }) {
   };
 
   return (
-    <article className="border-[#2F4C39]/60 border bg-[#16201D]/50 rounded-3xl w-[500px]">
-      <div className="border-b border-[#2F4C39]/60 px-6 py-4 flex justify-between items-center">
-        <MonitorHeader monitor={monitor} />
+    <article className="border-[#2F4C39]/60 border flex bg-[#16201D]/50 rounded-3xl w-[1000px]">
+      <div className="px-6 py-4 flex items-center w-96">
         <MonitorStatusIcon
           color={getStatusColor(statusCode)}
           statusCode={statusCode}
         />
+        <MonitorHeader monitor={monitor} />
       </div>
-      <div className="flex px-6 py-4 justify-between">
+      <div className="flex px-6 py-4 justify-between flex-1">
         <MonitorCurrentStatus
           status={getStatusText(statusCode)}
           statusCode={statusCode}
@@ -83,25 +83,21 @@ export default function Monitor({ monitor }) {
 }
 
 function MonitorHeader({ monitor }) {
-  return (
-    <div>
-      <h1>{monitor.name}</h1>
-    </div>
-  );
+  return <div>{monitor.name}</div>;
 }
 
 function MonitorStatusIcon({ color, statusCode }) {
   const containerClasses = `mr-4 border-2 rounded-full ${
     !statusCode || statusCode >= 400
-      ? "animate-pulse border-red-700"
+      ? "animate-pulse border-red-700 bg-red-600"
       : "pulsing-shadow"
   }`;
 
   return (
     <div className={containerClasses}>
       <svg
-        width="14"
-        height="14"
+        width="10"
+        height="10"
         viewBox="0 0 14 14"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

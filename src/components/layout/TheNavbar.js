@@ -2,6 +2,9 @@
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
+import GlobeIcon from "@/components/icons/GlobeIcon";
+import IncidentIcon from "@/components/icons/IncidentIcon";
+import StatusPageIcon from "@/components/icons/StatusPageIcon";
 
 export default function TheNavbar() {
   const pathname = usePathname();
@@ -9,31 +12,37 @@ export default function TheNavbar() {
     {
       href: "/",
       label: "Monitors",
+      svg: <GlobeIcon />,
     },
     {
       href: "/incidents",
       label: "Incidents",
+      svg: <IncidentIcon />,
     },
     {
       href: "/status-page",
       label: "Status page",
+      svg: <StatusPageIcon />,
     },
   ];
 
   return (
-    <nav className="py-16">
-      <ul className="flex gap-20">
+    <nav className="min-w-[220px] bg-[#2F4C39]/20 h-full px-5 border-r border-r-green-900/30">
+      <div className="text-xl font-semibold mb-5 pt-5 text-[#86efac]">
+        Curly.
+      </div>
+      <ul className="flex flex-col gap-2">
         {navLink.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
-              className={`border border-transparent rounded-2xl px-4 py-2 font-semibold ${
+              className={`border border-transparent rounded-lg px-3 h-9 font-semibold flex items-center gap-2 ${
                 pathname === link.href
-                  ? "bg-[#2F4C39]/90 text-white/90"
-                  : "text-white/40 hover:text-white/90 hover:border-[#2F4C39]/60 transition-all duration-300 ease-in-out"
+                  ? "bg-[#2F4C39]/50"
+                  : "opacity-70 hover:border-[#2F4C39]/60 transition-all duration-300 ease-in-out"
               }`}
             >
-              {link.label}
+              {link.svg} {link.label}
             </Link>
           </li>
         ))}

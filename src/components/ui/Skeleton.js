@@ -6,7 +6,7 @@ const shimmer =
 export function SkeletonMonitor() {
   return (
     <div
-      className={`${shimmer} border-green-300/50 border bg-green-200/50 rounded-3xl w-[500px]`}
+      className={`${shimmer} border-green-300/50 border bg-green-200/50 rounded-3xl w-[1000px]`}
     >
       <div
         className={` border-b border-green-300/50 px-6 py-4 flex justify-between items-center`}
