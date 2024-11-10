@@ -24,15 +24,9 @@ export default function Page() {
           </div>
           <div className="flex gap-1">
             {Array.from({ length: 90 }).map((_, index) => (
-              <div className="relative group">
-                <div
-                  className="h-4 w-1 rounded bg-[#86efac] group-hover:-translate-y-0.5 transition-all duration-150 ease-in-out"
-                  key={index}
-                ></div>
+              <div key={index} className="relative group">
+                <div className="h-4 w-1 rounded bg-[#86efac] group-hover:-translate-y-0.5 transition-all duration-150 ease-in-out"></div>
                 <div className="absolute hidden space-y-2 group-hover:block -top-12 left-1/2 -translate-x-1/2 bg-[#111113] border border-[#2F4C39]/60 text-[#86efac] px-3 py-2 rounded-xl text-xs whitespace-nowrap">
-                  {/* <div>
-                    <span className="font-semibold">100%</span> uptime
-                  </div> */}
                   <div className="flex items-center gap-2">
                     <CheckIcon width={16} height={16} /> Nov 10, 2024
                   </div>
