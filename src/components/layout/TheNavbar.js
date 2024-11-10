@@ -27,7 +27,7 @@ export default function TheNavbar() {
   ];
 
   return (
-    <nav className="min-w-[220px] bg-[#2F4C39]/20 h-full px-5 border-r border-r-green-900/30">
+    <nav className="min-w-[220px] bg-[#2F4C39]/20 min-h-screen px-5 border-r border-r-green-900/30">
       <div className="text-xl font-semibold mb-5 pt-5 text-[#86efac]">
         Curly.
       </div>
