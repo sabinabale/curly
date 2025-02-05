@@ -16,12 +16,27 @@ export default function AddMonitorForm() {
     frequency: "3",
   });
 
+  const sanitizeInput = (value) => {
+    return value.replace(/[<>]/g, "");
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    const sanitizedValue = sanitizeInput(value);
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: sanitizedValue,
     }));
+
+    if (value !== sanitizedValue) {
+      const input = e.target;
+      const pos = sanitizedValue.length;
+
+      setTimeout(() => {
+        input.setSelectionRange(pos, pos);
+      }, 0);
+    }
   };
 
   const validateForm = () => {
@@ -76,7 +91,7 @@ export default function AddMonitorForm() {
       const data = rawResponse ? JSON.parse(rawResponse) : {};
 
       if (!data.success) {
-        throw new Error(data.error || "Failed to create monitor");
+        throw new Error(data.error || "Please include https:// in the URL");
       }
 
       router.push("/");
@@ -89,7 +104,7 @@ export default function AddMonitorForm() {
   };
 
   return (
-    <div className="w-[500px]">
+    <div className="w-[500px] ">
       <h1>Create monitor</h1>
 
       <form onSubmit={handleSubmit}>
